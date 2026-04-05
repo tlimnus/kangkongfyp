@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.vscode/
+
+# Datafiles
+datasetkk/
+datasetkk_test/
+datasetkk_val/
+datasetkk_train/
+JurongLake/
