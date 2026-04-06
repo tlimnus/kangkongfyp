@@ -3,13 +3,16 @@ import torch
 import torch.nn as nn
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
+import pathlib
 
 # ------------------------
 # CONFIG
 # ------------------------
-TEST_DIR = r"C:\FYPData\JurongLake"
-MODEL_PATH = r"C:\FYPData\kangkongjr_dinov2_best.pth"
-BATCH_SIZE = 24
+filePath = pathlib.Path(__file__).parent.resolve()
+models_dir = filePath / "models"
+TEST_DIR = filePath / "datasetkk_test"
+MODEL_PATH = models_dir / "jrfull_dino.pth"
+BATCH_SIZE = 12
 
 # ------------------------
 # DEVICE
@@ -80,15 +83,16 @@ backbone.eval()
 for param in backbone.parameters():
     param.requires_grad = False
 
-#classifier = nn.Linear(embed_dim, num_classes).to(device)
-classifier = nn.Sequential(
-    nn.Linear(embed_dim, 256),
-    nn.ReLU(),
-    nn.Dropout(0.3),
-    nn.Linear(256, num_classes)
-).to(device)
-classifier.load_state_dict(checkpoint["classifier_state_dict"])
-classifier.eval()
+classifier = nn.Linear(embed_dim, num_classes).to(device)
+
+# classifier = nn.Sequential(
+#     nn.Linear(embed_dim, 256),
+#     nn.ReLU(),
+#     nn.Dropout(0.3),
+#     nn.Linear(256, num_classes)
+# ).to(device)
+# classifier.load_state_dict(checkpoint["classifier_state_dict"])
+# classifier.eval()
 
 # ------------------------
 # EVALUATION
